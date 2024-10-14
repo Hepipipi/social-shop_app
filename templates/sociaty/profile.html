@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block content %}
+     <h2>Профиль пользователя</h2>
+     <p>Имя пользователя: {{ user.username }}</p>
+     <p>Email: {{ user.email }}</p>
+     <p>Биография: {{ user.profile.bio }}</p>
+
+
+<form action="{% url 'logout' %}" method="post">
+    {% csrf_token %}
+    <button type="submit">Выход</button>
+</form>
+
+{% for post in posts %}
+     <p>{{ post.id }}{{post.context}}</p>
+
+{% endfor %}
+
+{% endblock %}

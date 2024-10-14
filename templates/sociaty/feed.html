@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% block title %}
+  Feed
+{% endblock %}
+
+{% block content %}
+    <h1>Feed</h1>
+    {% for post in posts %}
+        <div>
+        {% if post.image %}
+
+            <img src="{{ post.image.url }}" alt="">
+            {% else %}
+            <p>111111111111</p>
+        {% endif %}
+        <p>{{ post.id }}){{ post.content }}</p>
+        <p>{{ post.author.username }}</p>
+        <p>{{ post.created_at }}</p>
+        <a href="{% url 'add_comment' post.id %}">Add comment</a>
+        </div>
+    {% endfor %}
+
+        <h4>Comments</h4>
+
+        {% for comment in post.comments.all %}
+            <p>{{ comment.content }}</p>
+            <p>{{ comment.author.username }}</p>
+            <p>{{ comment.created_at }}</p>
+
+        {% endfor %}
+            <hr>
+
+        <h5>Authors</h5>
+       {% for author in authors %}
+          <p>{{ author.username }}</p>
+          <form action="" method = 'post'>
+              {% csrf_token %}
+              <input type="hidden" name = "author" value="{{ user.id }}">
+              <button type="submit">Подписаться</button>
+          </form>
+       {% endfor %}
+
+
+{% endblock %}
+
+
+
+
+
+
