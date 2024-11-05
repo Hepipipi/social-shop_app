@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block title %}
-Все продукты
+Продукты категории {{ category.name }}
 {% endblock %}
 
 {% block content %}
@@ -42,7 +42,7 @@
 
     /* Название продукта */
     .product-card h2 {
-        font-size: 22px;
+        font-size: 24px;
         color: #333;
         margin-bottom: 10px;
     }
@@ -64,7 +64,6 @@
         font-size: 16px;
         cursor: pointer;
         transition: background-color 0.3s;
-        margin-top: 10px;
     }
 
     .product-card button:hover {
@@ -72,7 +71,7 @@
     }
 </style>
 
-<h1 style="text-align: center; font-family: Arial, sans-serif; color: #333;">Все продукты</h1>
+<h1 style="text-align: center; font-family: Arial, sans-serif; color: #333;">Продукты категории {{ category.name }}</h1>
 
 <div class="product-container">
     {% for product in products %}
@@ -84,10 +83,12 @@
         <p>{{ product.description }}</p>
         <p><strong>{{ product.price }} KGS</strong></p>
 
-        <button type="submit">Добавить в корзину</button>
+        <form action="{% url 'add_to_cart' product.id %}" method="post">
+            {% csrf_token %}
+            <button type="submit">Добавить в корзину</button>
+        </form>
     </div>
     {% endfor %}
 </div>
 
 {% endblock %}
-

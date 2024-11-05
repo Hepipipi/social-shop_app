@@ -9,17 +9,68 @@
 <!--<h2>Вы вышли из аккаунта</h2>-->
 <!--</body>-->
 <!--</html>-->
-
-{% extends 'base/html' %}
+{% extends 'base.html' %}
 
 {% block title %}
-    LogOut
+    Выход из аккаунта
 {% endblock %}
-
-
-
 
 {% block content %}
-<h2>y</h2>
-{% endblock %}
+<style>
+    /* Фон для страницы */
+    .logout-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 70vh;
+        background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
+        color: #333;
+    }
 
+    /* Стили для сообщения */
+    .logout-message {
+        background-color: #fff;
+        padding: 40px;
+        border-radius: 10px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        text-align: center;
+        max-width: 400px;
+        width: 100%;
+    }
+
+    /* Заголовок */
+    h2 {
+        font-size: 2rem;
+        color: #ff7a7a;
+        margin-bottom: 10px;
+    }
+
+    /* Кнопка */
+    .logout-button {
+        background-color: #ff7a7a;
+        color: #fff;
+        padding: 12px 25px;
+        border: none;
+        border-radius: 5px;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: background-color 0.3s, transform 0.2s;
+        margin-top: 15px;
+        text-decoration: none;
+        display: inline-block;
+    }
+
+    .logout-button:hover {
+        background-color: #ff9a9e;
+        transform: scale(1.05);
+    }
+</style>
+
+<div class="logout-container">
+    <div class="logout-message">
+        <h2>Вы успешно вышли</h2>
+        <p>Спасибо за использование нашего сервиса. До скорой встречи!</p>
+        <a href="{% url 'login' %}" class="logout-button">Войти снова</a>
+    </div>
+</div>
+{% endblock %}

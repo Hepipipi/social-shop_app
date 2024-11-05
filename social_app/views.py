@@ -63,7 +63,7 @@ def delete_post(request, post_id):
     if post.author == request.user:
         post.delete()
     return redirect('profile')
-4
+
 
 
 @login_required
@@ -107,4 +107,17 @@ def feed(request):
 # def all_au(request):
 #     authors = Profile.objects.all()
 #     return render(request, 'sociaty/feed.html', {'authors': authors})
+
+def like_post(request, post_id):
+    post = get_object_or_404(Post, id=post_id)
+    if post.likes.filter(id=request.user.id).exists():
+        post.likes.remove(request.user)
+    else:
+        post.likes.add(request.user)
+    return redirect('social_feed')
+
+def personal_feed(request):
+    followed_authors = request.user.profile.followers.all()
+    posts = Post.objects.filter(author__in=followed_authors)
+    return render(request, 'sociatyfeed.html', {'posts': posts})
 

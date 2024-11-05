@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Все категории
+{% endblock %}
+
+{% block content %}
+
+<style>
+    /* Фоновый градиент */
+    body {
+        background: linear-gradient(135deg, #a8e6cf, #ffd3b6);
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+    }
+
+    /* Заголовок страницы */
+    h1 {
+        text-align: center;
+        color: #333;
+        margin-top: 40px;
+    }
+
+    /* Контейнер для категорий */
+    .category-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+        justify-content: center;
+        padding: 20px;
+    }
+
+    /* Карточка категории */
+    .category-card {
+        width: 250px;
+        padding: 20px;
+        border-radius: 12px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        background-color: rgba(255, 255, 255, 0.8);
+        text-align: center;
+        transition: transform 0.3s;
+    }
+
+    .category-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Ссылка на категорию */
+    .category-card h2 a {
+        text-decoration: none;
+        color: #007bff;
+        font-size: 20px;
+    }
+
+    .category-card h2 a:hover {
+        color: #0056b3;
+    }
+</style>
+
+<h1>Все категории</h1>
+
+<div class="category-container">
+    {% for category in categories %}
+    <a href="{% url 'product_list_by_category' category.slug %}">
+        <div class="category-card">
+            <h2>
+                {{ category.name }}
+            </h2>
+        </div>
+    </a>
+    {% endfor %}
+</div>
+
+{% endblock %}

@@ -26,6 +26,8 @@ urlpatterns = [
     path('post/delete/<int:post_id>/', views.delete_post, name='delete_post'),
     path('add/comment/<int:post_id>/', views.add_comment, name='add_comment'),
     path('feed/', views.feed, name='social_feed'),
+    path('folo/', views.personal_feed, name='personal_feed'),
+
 
 
 

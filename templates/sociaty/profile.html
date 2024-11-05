@@ -1,19 +1,88 @@
 {% extends 'base.html' %}
+
 {% block content %}
-     <h2>Профиль пользователя</h2>
-     <p>Имя пользователя: {{ user.username }}</p>
-     <p>Email: {{ user.email }}</p>
-     <p>Биография: {{ user.profile.bio }}</p>
+<style>
+    /* Основной контейнер */
+    .profile-container {
+        max-width: 600px;
+        margin: 20px auto;
+        padding: 20px;
+        background: #f5f5f5;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
 
+    /* Заголовок */
+    .profile-container h2 {
+        color: #333;
+        text-align: center;
+    }
 
-<form action="{% url 'logout' %}" method="post">
-    {% csrf_token %}
-    <button type="submit">Выход</button>
-</form>
+    /* Информация пользователя */
+    .user-info {
+        margin-bottom: 20px;
+        font-size: 1.1rem;
+        color: #555;
+    }
 
-{% for post in posts %}
-     <p>{{ post.id }}{{post.context}}</p>
+    .user-info p {
+        margin: 8px 0;
+    }
 
-{% endfor %}
+    /* Кнопка выхода */
+    .logout-button {
+        background-color: #ff7e5f;
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        font-size: 1rem;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        display: block;
+        width: 100%;
+        text-align: center;
+        margin: 20px 0;
+    }
 
+    .logout-button:hover {
+        background-color: #feb47b;
+    }
+
+    /* Посты пользователя */
+    .user-posts {
+        margin-top: 30px;
+    }
+
+    .user-posts p {
+        padding: 10px;
+        background: #fff;
+        border-radius: 8px;
+        margin: 10px 0;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+</style>
+
+<div class="profile-container">
+    <h2>Профиль пользователя</h2>
+    <div class="user-info">
+        <p>Имя пользователя: {{ user.username }}</p>
+        <p>Email: {{ user.email }}</p>
+        <p>Биография: {{ user.profile.bio }}</p>
+    </div>
+
+    <form action="{% url 'logout' %}" method="post">
+        {% csrf_token %}
+        <button type="submit" class="logout-button">Выход</button>
+    </form>
+
+    <div class="user-posts">
+        <h3>Посты пользователя</h3>
+        {% for post in posts %}
+            <p>{{ post.id }}) {{ post.context }}</p>
+        {% empty %}
+            <p>У пользователя пока нет постов.</p>
+        {% endfor %}
+    </div>
+</div>
 {% endblock %}

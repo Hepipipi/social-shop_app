@@ -1,17 +1,56 @@
 {% extends 'base.html' %}
+
 {% block title %}
   Authors
 {% endblock %}
 
 {% block content %}
- <h3>Authors</h3>
+    <h3>Authors</h3>
 
-       {% for author in authors %}
-            <p>{{ author.username }}</p>
-       {% endfor %}
+    <div class="authors-list">
+        {% for author in authors %}
+            <div class="author-item">
+                <p><strong>{{ author.username }}</strong></p>
+            </div>
+        {% empty %}
+            <p>No authors found.</p>
+        {% endfor %}
+    </div>
+
+    <hr>
 
 
 
-         {% endfor %}
-            <hr>
+    <style>
+        .authors-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin: 20px 0;
+        }
+
+        .author-item {
+            background-color: #f4f4f4;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .author-item p {
+            margin: 0;
+            font-size: 16px;
+            color: #333;
+        }
+
+        .author-item strong {
+            color: #4CAF50;
+        }
+
+        hr {
+            border: 0;
+            height: 1px;
+            background-color: #ddd;
+            margin-top: 30px;
+        }
+    </style>
 {% endblock %}

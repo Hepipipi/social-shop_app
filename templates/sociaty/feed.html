@@ -1,49 +1,153 @@
+
+
 {% extends 'base.html' %}
+
 {% block title %}
   Feed
 {% endblock %}
 
 {% block content %}
-    <h1>Feed</h1>
+
+<style>
+    /* Заголовок страницы */
+    h1 {
+        text-align: center;
+        color: #333;
+        margin-top: 20px;
+    }
+
+    /* Контейнер для постов */
+    .post-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+        padding: 20px;
+    }
+
+    /* Карточка поста */
+    .post-card {
+        width: 80%;
+        max-width: 600px;
+        padding: 20px;
+        border-radius: 12px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        background-color: #ffffff;
+        transition: box-shadow 0.3s;
+    }
+
+    .post-card:hover {
+        box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Изображение поста */
+    .post-card img {
+        width: 100%;
+        height: auto;
+        border-radius: 8px;
+        margin-bottom: 15px;
+    }
+
+    /* Информация о посте */
+    .post-content, .post-info {
+        font-size: 16px;
+        color: #666;
+    }
+
+    /* Ссылки и кнопки */
+    a, .post-card button {
+        color: #007bff;
+        text-decoration: none;
+        transition: color 0.3s;
+    }
+
+    a:hover {
+        color: #0056b3;
+    }
+
+    /* Комментарии */
+    .comments-section {
+        border-top: 1px solid #ddd;
+        margin-top: 15px;
+        padding-top: 15px;
+    }
+
+    .comments-section h4, .authors-section h5 {
+        margin-top: 0;
+        color: #333;
+    }
+
+    .comment {
+        font-size: 14px;
+        color: #555;
+        margin-bottom: 8px;
+    }
+
+    /* Секция авторов */
+    .authors-section {
+        margin-top: 30px;
+        text-align: center;
+    }
+
+    .authors-section p {
+        margin: 5px 0;
+    }
+
+    /* Кнопка подписки */
+    .subscribe-button {
+        background-color: #007bff;
+        color: white;
+        border: none;
+        padding: 8px 16px;
+        border-radius: 6px;
+        font-size: 14px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+    .subscribe-button:hover {
+        background-color: #0056b3;
+    }
+</style>
+
+<h1>Feed</h1>
+
+<div class="post-container">
     {% for post in posts %}
-        <div>
+    <div class="post-card">
         {% if post.image %}
-
-            <img src="{{ post.image.url }}" alt="">
-            {% else %}
-            <p>111111111111</p>
+            <img src="{{ post.image.url }}" alt="{{ post.content }}">
+        {% else %}
+            <p>Изображение отсутствует</p>
         {% endif %}
-        <p>{{ post.id }}){{ post.content }}</p>
-        <p>{{ post.author.username }}</p>
-        <p>{{ post.created_at }}</p>
-        <a href="{% url 'add_comment' post.id %}">Add comment</a>
+        <p class="post-content"><strong>{{ post.id }}. </strong>{{ post.content }}</p>
+        <p class="post-info"><strong>Автор:</strong> {{ post.author.username }}</p>
+        <p class="post-info"><strong>Дата:</strong> {{ post.created_at }}</p>
+        <a href="{% url 'add_comment' post.id %}">Добавить комментарий</a>
+
+        <div class="comments-section">
+            <h4>Комментарии</h4>
+            {% for comment in post.comments.all %}
+                <p class="comment"><strong>{{ comment.author.username }}:</strong> {{ comment.content }} ({{ comment.created_at }})</p>
+            {% endfor %}
         </div>
+    </div>
     {% endfor %}
+</div>
 
-        <h4>Comments</h4>
-
-        {% for comment in post.comments.all %}
-            <p>{{ comment.content }}</p>
-            <p>{{ comment.author.username }}</p>
-            <p>{{ comment.created_at }}</p>
-
-        {% endfor %}
-            <hr>
-
-        <h5>Authors</h5>
-       {% for author in authors %}
-          <p>{{ author.username }}</p>
-          <form action="" method = 'post'>
-              {% csrf_token %}
-              <input type="hidden" name = "author" value="{{ user.id }}">
-              <button type="submit">Подписаться</button>
-          </form>
-       {% endfor %}
-
+<div class="authors-section">
+    <h5>Авторы</h5>
+    {% for author in authors %}
+        <p>{{ author.username }}</p>
+        <form action="" method="post">
+            {% csrf_token %}
+            <input type="hidden" name="author" value="{{ author.id }}">
+            <button type="submit" class="subscribe-button">Подписаться</button>
+        </form>
+    {% endfor %}
+</div>
 
 {% endblock %}
-
-
 
 
 
